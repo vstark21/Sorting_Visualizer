@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sorting Visualizer</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/style.css">
+        <link rel="icon" href="assets/sort.png">
+    </head>
+
+    <body>
+        <div id="toolbar">
+            <div id="generate_array">Generate New Array</div>
+            <div class="separator"></div>
+
+            <div id="array_size">Change Array Size</div>
+            <input type="range" min="4" max="100" id="change_size" style="background: white; cursor: pointer;">
+            <div class="separator"></div>
+
+            <div class="current_algo_button" id="merge">Merge Sort</div>
+            <div class="algo_button" id="bubble">Bubble Sort</div>
+            <div class="algo_button" id="insertion">Insertion Sort</div>
+            <div class="algo_button">Heap Sort</div>
+            <div class="separator"></div>
+
+            <div id="sort">SORT</div>
+        </div>
+        <div id="array_container" align="center">
+        </div>
+
+        <script src="assets/main.js"></script> 
+    </body>
+
+</html>

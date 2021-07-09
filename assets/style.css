@@ -1,0 +1,77 @@
+body{
+    background-color: rgb(230, 230, 230);
+}
+
+div{
+    display: block;
+    font-family: monospace;
+}
+
+#toolbar{
+    width: 100%;
+    height: 100px;
+    background-color: #34495e;   
+}
+
+#generate_array{
+    color: white;
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 25px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.separator {
+    width: 5px;
+    height: 55px;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin-left: 15px;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+#array_size{
+    color: white;
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 15px;    
+}
+
+.current_algo_button {
+    color: rgb(241, 94, 255);
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.algo_button {
+    color: white;
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+#sort {
+    font-size: 16px;
+    font-family: monospace;
+    display: inline-block;
+    margin-left: 15px;    
+    color: white;
+    cursor: pointer;
+}
+
+#array_container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 70vh;
+    padding-left: 25%;
+    padding-right: 25%;
+}
