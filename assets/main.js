@@ -7,7 +7,8 @@ var divs = [];
 var algo_buttons = [
     document.getElementById("merge"),
     document.getElementById("bubble"),
-    document.getElementById("insertion")];
+    document.getElementById("insertion"),
+    document.getElementById("heap")];
 var cur_algo = "merge";
 var sort_button = document.getElementById("sort")
 
@@ -72,6 +73,8 @@ function change_algo(){
             cur_algo="bubble";break;
         case "Insertion Sort":
             cur_algo="insertion";break;
+        case "Heap Sort":
+            cur_algo="heap";break;
     }
 }
 
@@ -84,6 +87,8 @@ function runalgo(){
             bubble_sort();break;
         case "insertion":
             insertion_sort();break;
+        case "heap":
+            heap_sort();break;
     }
 }
 
@@ -240,4 +245,62 @@ function merge_sort(){
     for(var i = 0;i < array_size;i += 1){
         update_insertion(divs[i], div_sizes[i], "violet");
     }
+}
+
+function heapify(n, i){
+    var larg = i;
+    var l = 2 * i + 1;
+    var r = 2 * i + 2;
+    update_insertion(divs[larg], div_sizes[larg], "green");
+    update_insertion(divs[l], div_sizes[l], "green");
+    update_insertion(divs[r], div_sizes[r], "green");
+    if(l < n && div_sizes[larg] < div_sizes[l]){
+        larg = l;
+    }
+    if(r < n && div_sizes[larg] < div_sizes[r]){
+        larg = r;
+    }
+    if(larg != i){
+        update_insertion(divs[larg], div_sizes[larg], "red");
+        update_insertion(divs[i], div_sizes[i], "red");
+        [div_sizes[i], div_sizes[larg]] = [div_sizes[larg], div_sizes[i]];
+        update_insertion(divs[larg], div_sizes[larg], "green");
+        update_insertion(divs[i], div_sizes[i], "green");
+        heapify(n, larg);
+    }
+    update_insertion(divs[larg], div_sizes[larg], "blue");
+    update_insertion(divs[l], div_sizes[l], "blue");
+    update_insertion(divs[r], div_sizes[r], "blue");
+}
+
+function heap_sort_helper(){
+    var n = div_sizes.length;
+    for(var i = Math.floor(n / 2) - 1;
+            i >= 0; i -= 1){
+        heapify(n, i);
+    }
+    for(var i = n - 1;i > 0; i -= 1){
+        update_insertion(divs[0], div_sizes[0], "green");
+        update_insertion(divs[i], div_sizes[i], "green");
+        update_insertion(divs[0], div_sizes[0], "red");
+        update_insertion(divs[i], div_sizes[i], "red");
+        [div_sizes[i], div_sizes[0]] = [div_sizes[0], div_sizes[i]];
+        update_insertion(divs[0], div_sizes[0], "green");
+        update_insertion(divs[i], div_sizes[i], "green");
+        heapify(i, 0);
+        update_insertion(divs[0], div_sizes[0], "blue");
+        update_insertion(divs[i], div_sizes[i], "blue");
+        if(2 * i + 1 < n){
+            update_insertion(divs[2 * i + 1], div_sizes[2 * i + 1], "violet");
+        }
+        if(2 * i + 2 < n){
+            update_insertion(divs[2 * i + 2], div_sizes[2 * i + 2], "violet");
+        }
+    }for(var i = 2;i >= 0;i -= 1){
+        update_insertion(divs[i], div_sizes[i], "violet");
+    }
+}
+
+function heap_sort(){
+    heap_sort_helper();
 }
