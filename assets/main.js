@@ -10,7 +10,7 @@ var algo_buttons = [
     document.getElementById("insertion"),
     document.getElementById("heap")];
 var cur_algo = "merge";
-var sort_button = document.getElementById("sort")
+var sort_button = document.getElementById("sort");
 
 var current_delay = 0;
 var gen_delay = 0;
@@ -78,8 +78,36 @@ function change_algo(){
     }
 }
 
+function lock_buttons(){
+    for(var i = 0;i < algo_buttons.length; i += 1){
+        algo_buttons[i].classList.add("button_locked");
+        algo_buttons[i].removeEventListener("click", change_algo);
+    }
+    sort_button.style.color = "rgba(219, 57, 57, 0.8)";
+    sort_button.removeEventListener("click", runalgo);
+    doc_gen.removeEventListener("click", update_array_size);
+    doc_gen.style.color = "rgba(219, 57, 57, 0.8)";
+    doc_arrs.removeEventListener("input", update_array_size);
+    doc_arrs.disabled = true;
+}
+
+function unlock_buttons(){
+    for(var i = 0;i < algo_buttons.length; i += 1){
+        algo_buttons[i].classList.remove("button_locked");
+        algo_buttons[i].addEventListener("click", change_algo);
+    }
+    sort_button.style.color = "white";
+    sort_button.addEventListener("click", runalgo);
+    doc_gen.addEventListener("click", update_array_size);
+    doc_gen.style.color = "white";
+    doc_arrs.addEventListener("input", update_array_size);
+    doc_arrs.disabled = false;
+}
+
 function runalgo(){
+    console.log("SORT CLICKED!");
     current_delay = 0;
+    lock_buttons();
     switch (cur_algo){
         case "merge":
             merge_sort();break;
@@ -90,6 +118,9 @@ function runalgo(){
         case "heap":
             heap_sort();break;
     }
+    setTimeout(function(){
+        unlock_buttons();
+    }, current_delay+=gen_delay);
 }
 
 function color_green(a, b){
