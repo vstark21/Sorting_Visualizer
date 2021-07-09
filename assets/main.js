@@ -14,7 +14,7 @@ var sort_button = document.getElementById("sort")
 var current_delay = 0;
 var gen_delay = 0;
 
-doc_gen.addEventListener("click", generate_array);
+doc_gen.addEventListener("click", update_array_size);
 doc_arrs.addEventListener("input", update_array_size);
 
 function generate_array(){
@@ -42,8 +42,8 @@ function generate_array(){
 
 function update_array_size(){
     array_size = doc_arrs.value;
-    current_delay = 0;
     gen_delay = Math.floor(500 / array_size);
+    current_delay = 0;
     if(array_size > 50){
         gen_delay = Math.floor(200 / array_size);
     }
@@ -113,6 +113,7 @@ function compare_bubble(a, b){
     setTimeout(function(){
         color_green(a, b);
     }, current_delay+=gen_delay);
+    
     setTimeout(function(){
         if(parseInt(a.innerHTML) > 
                 parseInt(b.innerHTML)){
@@ -124,6 +125,7 @@ function compare_bubble(a, b){
             b.style.height = b.innerHTML + "px";
         }
     }, current_delay+=gen_delay);
+    
     setTimeout(function(){
         color_blue(a, b);
     }, current_delay+=gen_delay);
@@ -141,38 +143,56 @@ function bubble_sort(){
             }, current_delay+=gen_delay);
         })(i);
     }
+    
 }
 
-function compare_insertion(a, b, c){
+function update_insertion(a, height, color){
     setTimeout(function(){
-        color_green(a, b);
-    }, current_delay+=gen_delay);
-    setTimeout(function(){
-        if(parseInt(c.innerHTML) < parseInt(a.innerHTML)){
-            color_red(a, b);
-            b.innerHTML = a.innerHTML;
-            b.style.height = b.innerHTML + "px";
+        a.style.height = height + "px";
+        a.innerHTML = height;
+        switch (color){
+            case "red":
+                a.style.backgroundColor = "rgba(219, 57, 57, 0.8)";
+                break;
+            case "blue":
+                a.style.backgroundColor = "rgba(66, 134, 244, 0.8)";
+                break;
+            case "green":
+                a.style.backgroundColor = "rgba(78, 216, 96, 0.8)";
+                break;
+            case "violet":
+                a.style.backgroundColor = "rgba(169, 92, 232, 0.8)";
+                break;
         }
-    }, current_delay+=gen_delay);
-    setTimeout(function(){
-        color_blue(a, b);
     }, current_delay+=gen_delay);
 }
 
 function insertion_sort(){
     var n = divs.length;
-    for(var i = 1;i < n;i += 1){
-        for(var j = i - 1;j >= 0;j--){
-            compare_insertion(divs[j], divs[j+1], divs[i]);
+    for(var i = 0;i < n;i += 1){
+        var key = div_sizes[i];
+        var j = i - 1;
+        while(j >= 0 && key < div_sizes[j]){
+            update_insertion(divs[j], div_sizes[j], "green");
+            update_insertion(divs[j + 1], div_sizes[j + 1], "green");
+
+            
+            update_insertion(divs[j], div_sizes[j], "red");
+            update_insertion(divs[j + 1], div_sizes[j + 1], "red");
+
+            div_sizes[j + 1] = div_sizes[j];
+
+            update_insertion(divs[j], div_sizes[j], "green");
+            update_insertion(divs[j + 1], div_sizes[j + 1], "green");
+            j -= 1;
         }
-        
-        // for(var j = 0;j < n - i - 1;j += 1){
-        //     compare(divs[j], divs[j+1]);
-        // }
-        // (function(i) {
-        //     setTimeout(function(){
-        //         color_violet(divs[n - i - 1]);
-        //     }, current_delay+=gen_delay);
-        // })(i);
+        div_sizes[j + 1] = key;
+
+        for(var t = 0;t < i;t += 1){
+            update_insertion(divs[t], div_sizes[t], "blue");
+        }
+    }
+    for(var i = 0;i < n;i += 1){
+        update_insertion(divs[i], div_sizes[i], "violet");
     }
 }
