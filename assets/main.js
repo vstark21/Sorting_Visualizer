@@ -45,7 +45,7 @@ function update_array_size(){
     gen_delay = Math.floor(500 / array_size);
     current_delay = 0;
     if(array_size > 50){
-        gen_delay = Math.floor(200 / array_size);
+        gen_delay = Math.floor(300 / array_size);
     }
     generate_array();
 }
@@ -76,6 +76,7 @@ function change_algo(){
 }
 
 function runalgo(){
+    current_delay = 0;
     switch (cur_algo){
         case "merge":
             merge_sort();break;
@@ -84,10 +85,6 @@ function runalgo(){
         case "insertion":
             insertion_sort();break;
     }
-}
-
-function merge_sort(){
-    console.log("MERGE IT!");
 }
 
 function color_green(a, b){
@@ -193,6 +190,54 @@ function insertion_sort(){
         }
     }
     for(var i = 0;i < n;i += 1){
+        update_insertion(divs[i], div_sizes[i], "violet");
+    }
+}
+
+function merge(start, mid, end){
+    var new_divs = [];
+    var i = start, j = mid + 1;
+    while (i <= mid && j <= end){
+        update_insertion(divs[i], div_sizes[i], "red");
+        update_insertion(divs[j], div_sizes[j], "red");
+        if(div_sizes[i] > div_sizes[j]){
+            new_divs.push(div_sizes[j]);
+            j += 1;
+        }
+        else{
+            new_divs.push(div_sizes[i]);
+            i += 1;
+        }
+    }
+    while (i <= mid){
+        update_insertion(divs[i], div_sizes[i], "red");
+        new_divs.push(div_sizes[i]);
+        i += 1;
+    }
+    while (j <= end){
+        update_insertion(divs[j], div_sizes[j], "red");
+        new_divs.push(div_sizes[j]);
+        j += 1;
+    }
+    for(var i = start;i <= end;i += 1){
+        div_sizes[i] = new_divs[i - start];
+        update_insertion(divs[i], div_sizes[i], "green");
+    }
+}
+
+function merge_sort_helper(start, end){
+    var mid = Math.floor((start + end) / 2);
+    update_insertion(divs[mid], div_sizes[mid], "green");
+    if(end - start > 1){
+        merge_sort_helper(start, mid);
+        merge_sort_helper(mid + 1, end);
+    }
+    merge(start, mid, end);
+}
+
+function merge_sort(){
+    merge_sort_helper(0, array_size - 1);
+    for(var i = 0;i < array_size;i += 1){
         update_insertion(divs[i], div_sizes[i], "violet");
     }
 }
